@@ -1,0 +1,4 @@
+::ng-deep  .mat-checkbox-inner-container{
+  width: 13px !important;
+  height: 13px !important;
+}

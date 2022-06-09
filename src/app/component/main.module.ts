@@ -7,6 +7,8 @@ import { MainRoutingModule, ROUTING_COMPONENTS } from "./main-routing.module";
 import { MainComponent } from "./main.component";
 import { ProductListComponent } from "./product-list/product-list.component"; 
 import { ProductDemoComponent } from "./product-list/product-demo/product-demo.component";
+import { MatCheckboxModule } from '@angular/material/checkbox';
+
 
 @NgModule({
   imports: [
@@ -16,6 +18,7 @@ import { ProductDemoComponent } from "./product-list/product-demo/product-demo.c
 
     SharedModule,
     MainRoutingModule,
+    MatCheckboxModule
   ],
   declarations: [MainComponent, ...ROUTING_COMPONENTS, ProductListComponent, ProductDemoComponent, ],
 })

@@ -62,9 +62,8 @@
               <div class="collapse mt-2" id="all-brands">
                 <form #f="ngForm">
                   <div *ngFor="let item of allBrands">
-                    <input type="checkbox" [id]="item" [name]="item"
-                      (click)="changeCheckBrand(item,$any($event.target).checked)" [value]="item" ngModel>
-                    <label [innerHTML]="item" [for]="item" class="mx-1"></label>
+                    <mat-checkbox [checked]="item.selected" class="border-0"
+                      (change)="changeCheckBrand(item.brand,$any($event).checked)">{{item.brand}}</mat-checkbox>
                   </div>
                 </form>
               </div>
@@ -75,7 +74,7 @@
     </div>
 
     <div class="col-sm-12 col-md-9 col-lg-10">
-      <div class="row d-flex justify-content-start mx-auto" id="list-container" *ngIf="productList?.length">
+      <div class="row d-flex justify-content-start mx-auto" id="list-container" *ngIf="prodLis?.length">
         <ng-container *ngFor="let product of productList">
           <product-demo class="d-flex flex-column my-2 product-container col-14 col-md-5 col-lg-4 col-xl-3"
             [product]="product">

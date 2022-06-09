@@ -74,7 +74,7 @@ export class ProductComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.productId = +this._route.snapshot.params?.["id"];
-
+    this.title.setTitle(this._products_list.getProduct(this.productId).name);
     if (!this.productId) {
       this._toastService.error(
         "Product not found. Redirecting to list!"
@@ -82,8 +82,6 @@ export class ProductComponent implements OnInit, OnDestroy {
       this._router.navigateByUrl("/");
       return;
     }
-
-    this.title.setTitle(this._products_list.getProduct(this.productId).name);
     this._apiService
       .getProducts()
       .pipe(

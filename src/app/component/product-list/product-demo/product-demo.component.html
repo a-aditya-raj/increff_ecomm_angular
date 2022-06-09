@@ -22,12 +22,11 @@
   <div class="cart-section d-flex justify-content-center pt-2" (click)="toggleValue($event,product.id)">
     <span class="btn btn-primary" (click)="updateQuantity(1)" *ngIf="!isInCart()">Add to Cart</span>
     <div *ngIf="isInCart()" class="d-flex justify-content-center pt-1">
-      <span class="cursor-pointer pt-1 mr-2 border px-2 btn"
-        (click)="updateQuantity(-1)" (click)="toggleValue($event,product.id)">-</span>
+      <span class="cursor-pointer pt-1 mr-2 border-dark px-2 btn justify-content-center" (click)="updateQuantity(-1)"
+        (click)="toggleValue($event,product.id)">- </span>
       <span class="product-quantity px-4 py-1 border rounded">{{
         getQuantity(product.id) }}</span>
-      <span class="cursor-pointer pt-1 ml-2 border px-2 btn"
-        (click)="updateQuantity(1)">+</span>
+      <span class="cursor-pointer pt-1 ml-2 border-dark px-2 btn" (click)="updateQuantity(1)">+</span>
     </div>
   </div>
 </div>

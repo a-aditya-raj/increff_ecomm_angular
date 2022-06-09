@@ -11,6 +11,8 @@ import { LoginComponent } from './component/login/login.component';
 import { LoginManager, ApiService, StorageService, ToastService, AuthGuard, CartService } from './services';
 import { MainModule } from './component/main.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+
 
 
 @NgModule({
@@ -26,6 +28,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ReactiveFormsModule,
     MainModule,
     BrowserAnimationsModule,
+    MatCheckboxModule
   ],
   providers: [LoginManager, ApiService, StorageService, ToastService, AuthGuard, CartService, MainModule],
   bootstrap: [AppComponent]

@@ -10,10 +10,17 @@ import { CartComponent } from '../cart/cart.component';
 import { Product } from 'src/model/product';
 import { NgForm, NgModel } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+
 declare var $: any;
+interface filt  {
+  brand: any,
+  selected: boolean
+};
 @Component({
   selector: 'app-product-list',
   templateUrl: './product-list.component.html',
+  styleUrls: ['./product-list.component.css'],
   providers: [ApiService, CartService, StorageService, LoginManager, ToastService, CartComponent],
 })
 export class ProductListComponent implements OnInit, OnDestroy {
@@ -52,16 +59,28 @@ export class ProductListComponent implements OnInit, OnDestroy {
   }
 
   checkedBrands: Set<string> = new Set;
-  allBrands: any[] = [];
-
-
+  
+  allBrands: filt[] = [];
+  tempFilte: any[] = [];
   //initiate filters 
   initFilters(all_products: any[]) {
-    var allBrandsSet = new Set();
+    var allBrandsSet = new Set<filt>();
     all_products.forEach((element) => {
       allBrandsSet.add(element["brand"]);
-    })
-    this.allBrands = Array.from(allBrandsSet)
+    });
+    this.tempFilte = Array.from(allBrandsSet);
+    allBrandsSet = new Set<filt>();
+    for (let item of this.tempFilte){
+      let nfil = {
+        brand: item,
+        selected: false,
+      } as filt;
+      if(this.checkedBrands.has(item)){
+        nfil.selected = true;
+      }
+      allBrandsSet.add(nfil);
+    }
+    this.allBrands = Array.from(allBrandsSet);
   }
 
   //filters all products based on curent filter data
@@ -89,8 +108,8 @@ export class ProductListComponent implements OnInit, OnDestroy {
   }
 
   resetFilters(f: NgForm) {
-    f.reset();
     this.checkedBrands = new Set;
+    this.initFilters(this.prodLis);
     this.filter()
   }
 
@@ -131,8 +150,8 @@ export class ProductListComponent implements OnInit, OnDestroy {
     this._apiService
       .getProducts()
       .pipe(takeWhile(() => this._alive))
-      .subscribe((response) => (this.productList = response.body));
-    
+      .subscribe((response) => (this.prodLis = response.body));
+
   }
 
   ngOnDestroy() {
