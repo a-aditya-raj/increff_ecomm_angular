@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { takeWhile } from 'rxjs';
 import { ApiService } from 'src/app/services/api-service.service';
 import { CartService } from 'src/app/services/cart-service.service';
@@ -9,6 +9,7 @@ import { ProductListService } from 'src/app/services';
 import { CartComponent } from '../cart/cart.component';
 import { Product } from 'src/model/product';
 import { NgForm, NgModel } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 declare var $: any;
 @Component({
   selector: 'app-product-list',
@@ -19,7 +20,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   private _alive: boolean = true;
   productList: Product[] = this.products_list.getAllProducts();
   prodLis: Product[] = this.products_list.getAllProducts();
-  
+
   filterpopup = false || window.matchMedia('(min-width: 992px)').matches;
   filterpopback = this.filterpopup && window.matchMedia('(max-width: 991px)').matches;
   toogle() {
@@ -71,8 +72,9 @@ export class ProductListComponent implements OnInit, OnDestroy {
         //brands check
         (!this.checkedBrands.size ||
           this.checkedBrands.has(element.brand))
-      )
+      ) {
         this.productList.push(element);
+      }
     });
     this.sort();
     var filterObject = {
@@ -105,28 +107,32 @@ export class ProductListComponent implements OnInit, OnDestroy {
     }
     var filters = JSON.parse(prevFilter);
     this.checkedBrands = new Set(JSON.parse(filters.brands));
-    for(let item of this.checkedBrands){
-      var elm = $("#"+item);
-      elm.click();
-      
-    }
     this.filter()
   }
-  getvalue(){
-    
-    return false;
+  checkthis() {
+    this.checkedBrands.forEach((ele) => {
+      var checkBox = $('input[id="' + ele.toString() + '"]');
+      checkBox.prop("checked", true);
+    })
   }
-  constructor(private _apiService: ApiService, public products_list: ProductListService) { }
+
+  toggle(id: string) {
+    jQuery(id).toggle();
+  }
+  constructor(private _apiService: ApiService, public products_list: ProductListService, private title: Title) { }
 
   ngOnInit() {
-    this.initFilters(this.prodLis);
+    this.title.setTitle("Products");
     this.checkLocalStorageForFilters();
+    this.initFilters(this.prodLis);
+    this.checkthis();
     this.filter();
     this.sort();
     this._apiService
-    .getProducts()
-    .pipe(takeWhile(() => this._alive))
-    .subscribe((response) => (this.productList = response.body));
+      .getProducts()
+      .pipe(takeWhile(() => this._alive))
+      .subscribe((response) => (this.productList = response.body));
+    
   }
 
   ngOnDestroy() {

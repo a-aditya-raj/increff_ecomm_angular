@@ -17,6 +17,6 @@ import { ProductDemoComponent } from "./product-list/product-demo/product-demo.c
     SharedModule,
     MainRoutingModule,
   ],
-  declarations: [MainComponent, ...ROUTING_COMPONENTS, ProductListComponent, ProductDemoComponent],
+  declarations: [MainComponent, ...ROUTING_COMPONENTS, ProductListComponent, ProductDemoComponent, ],
 })
 export class MainModule {}

@@ -148,7 +148,7 @@ reload(){
 
   constructor(public papa: Papa, public products_list: ProductListService, private title: Title) { }
   ngOnInit(): void {
-    this.title.setTitle("Upload Order");
+    this.title.setTitle("Order Details");
     $(document).ready(() => {
       $('[data-toggle="tooltip"]').tooltip()
     })

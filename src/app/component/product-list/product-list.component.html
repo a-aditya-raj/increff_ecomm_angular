@@ -23,8 +23,8 @@
               <h6 class="pt-1">Showing <span>{{productList?.length}}</span> Products</h6>
             </div>
             <div class="col-sm-12 col-md-auto d-flex justify-content-end pr-4">
-              <button class="btn btn-outline-secondary mr-2 d-md-none p-0" type="button" data-toggle="collapse"
-                data-target="#filtersection" id="filter-section">
+              <button class="btn btn-outline-secondary mr-2 p-0 d-md-none" type="button"
+                (click)="toggle('#filtersection')">
                 <span class="material-icons align-middle pt-1" data-toggle="tooltip" title="Filters">
                   filter_alt
                 </span>
@@ -55,15 +55,15 @@
           </div>
           <form>
             <div class="border-top border-bottom">
-              <label class="filter-head h5 dropdown-toggle" data-toggle="collapse" data-target="#all-brands"
-                type="button" aria-expanded="false" aria-controls="all-brands">
+              <label class="filter-head h5 dropdown-toggle" type="button" aria-expanded="false"
+                (click)="toggle('#all-brands')">
                 Brands
               </label>
               <div class="collapse mt-2" id="all-brands">
                 <form #f="ngForm">
                   <div *ngFor="let item of allBrands">
                     <input type="checkbox" [id]="item" [name]="item"
-                      (change)="changeCheckBrand(item,$any($event.target).checked)" [value]="item" ngModel>
+                      (click)="changeCheckBrand(item,$any($event.target).checked)" [value]="item" ngModel>
                     <label [innerHTML]="item" [for]="item" class="mx-1"></label>
                   </div>
                 </form>

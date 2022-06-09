@@ -8,6 +8,7 @@ import { finalize, takeWhile, tap } from "rxjs/operators";
 import { ApiService, ToastService, CartService, ProductListService, UsersService } from "src/app/services";
 import { LoginManager } from "src/app/services";
 import { Product } from "src/model/product";
+import { Title } from "@angular/platform-browser";
 
 interface CartItem {
   id: number;
@@ -64,7 +65,8 @@ export class CartComponent implements OnInit, OnDestroy {
     private _toastService: ToastService,
     private modalService: NgbModal,
     private _products_list: ProductListService,
-    private _userService: UsersService
+    private _userService: UsersService,
+    private title: Title,
   ) { }
 
   getCartItem(productId: number) {
@@ -192,14 +194,25 @@ export class CartComponent implements OnInit, OnDestroy {
     // creating a temporary element to mock a click and download the file.
     const tempLink = document.createElement("a");
     tempLink.href = csvURL as string;
-    tempLink.setAttribute("download", "order.csv");
+    tempLink.setAttribute("download", "order"+ this.getDateTime() +".csv");
     tempLink.click();
 
     this._toastService.success("Order placed successfully!");
+    this.openCheckoutSuccess(this.checkOutSuccess);
+    this.clearCart();
   }
   removeThis = {
     id: 0,
     name: ""
+  }
+  getDateTime() {
+    return new Date().toLocaleString("en-US", {
+      year: "numeric",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    });
   }
   askConfirmRemove(productId: any) {
     this.removeThis = {
@@ -254,6 +267,7 @@ export class CartComponent implements OnInit, OnDestroy {
 
 
   ngOnInit() {
+    this.title.setTitle("Cart");
     this.initializeCart();
   }
 

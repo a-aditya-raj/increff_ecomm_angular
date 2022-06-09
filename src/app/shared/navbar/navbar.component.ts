@@ -39,7 +39,9 @@ export class NavbarComponent implements OnInit, OnChanges, OnDestroy {
   canShow(path: string) {
     return this._location.path() !== path;
   }
-
+  toggle(id: string){
+    jQuery(id).toggle();
+  }
   logout() {
     this._loginService.logout();
   }

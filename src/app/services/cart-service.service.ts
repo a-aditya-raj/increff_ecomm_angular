@@ -114,7 +114,6 @@ export class CartService {
     }
 
     const cartItems = this.getCartItems() || [];
-    console.log(cartItems);
     if (cartItems.length) {
       const index = cartItems.findIndex((item) => item.id === id);
       if (index !== -1) {

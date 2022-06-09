@@ -14,6 +14,7 @@ import {
 } from "@angular/forms";
 import { ApiService } from 'src/app/services/api-service.service';
 import { StorageService } from 'src/app/services/storage-service.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-login',
@@ -32,7 +33,8 @@ export class LoginComponent implements OnInit {
     private _router: Router,
     private _loginManager: LoginManager,
     private _formBuilder: FormBuilder,
-    private _toastService: ToastService
+    private _toastService: ToastService,
+    private title: Title,
   ) { }
 
   get email() {
@@ -125,6 +127,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.title.setTitle("Login");
     this.registerForm();
     if(this._loginManager.isAuthenticated()){
       this.navigateToPage();

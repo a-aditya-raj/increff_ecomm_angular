@@ -6,3 +6,9 @@
   z-index: 1000;
   right: 10px;
 }
+.error{
+  background-color: rgb(192, 37, 37);
+}
+.success{
+  background-color: rgb(23, 66, 23);
+}

@@ -13,7 +13,7 @@ export class ToastService {
   initializeToast(autohide: boolean = false) {
     this.removeToast();
     if (!autohide)
-      this.timeoutID = setTimeout(this.removeToast.bind(this), 5000);
+      this.timeoutID = setTimeout(this.removeToast.bind(this), 3000);
   }
 
   showToast(message: string, header: string, type: string) {
@@ -21,7 +21,7 @@ export class ToastService {
 
     const toaster =
       `
-    <div class="toast m-2 ml-auto  ` +
+    <div class="toast m-2 ml-auto  text-` +
       type +
       ` ">
         <div class="toast-header border-bottom">
@@ -57,6 +57,6 @@ export class ToastService {
   }
 
   error(message: string, header: string = "Error") {
-    this.showToast(message, header, "error");
+    this.showToast(message, header, "danger");
   }
 }

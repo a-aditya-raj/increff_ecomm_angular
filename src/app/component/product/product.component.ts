@@ -3,8 +3,9 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { tap, takeWhile, finalize } from "rxjs/operators";
 
 import { Product } from "src/model/product";
-import { ApiService, ToastService, CartService, LoginManager, UsersService } from "src/app/services";
+import { ApiService, ToastService, CartService, LoginManager, UsersService, ProductListService } from "src/app/services";
 import { NgForm } from "@angular/forms";
+import { Title } from "@angular/platform-browser";
 
 @Component({
   selector: "product-detail",
@@ -28,7 +29,9 @@ export class ProductComponent implements OnInit, OnDestroy {
     private _cartService: CartService,
     private _toastService: ToastService,
     private _loginService: LoginManager,
-    private _userService: UsersService
+    private _userService: UsersService,
+    private title: Title,
+    private _products_list: ProductListService
   ) { }
 
   getQuantity() {
@@ -80,6 +83,7 @@ export class ProductComponent implements OnInit, OnDestroy {
       return;
     }
 
+    this.title.setTitle(this._products_list.getProduct(this.productId).name);
     this._apiService
       .getProducts()
       .pipe(
