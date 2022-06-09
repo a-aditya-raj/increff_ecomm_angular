@@ -1,0 +1,8 @@
+.main-container {
+  min-height: calc(100vh - 140px);
+}
+.toaster{
+  position: fixed;
+  z-index: 1000;
+  right: 10px;
+}

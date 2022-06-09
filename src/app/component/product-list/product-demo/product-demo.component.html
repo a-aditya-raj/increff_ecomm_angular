@@ -1,0 +1,33 @@
+<div class="card border rounded shadow-sm cursor-pointer p-3" *ngIf="product" (mouseleave)="quantity = 1"
+  (click)="navigateToDetail()">
+  <div class="mx-auto" id="link1">
+    <img class="img-fluid rounded img-thumbnail border-0" [src]="product.imageUrl" alt="Image not Available">
+  </div>
+  <div class="product-detail my-1 px-1 position-relative" id="link2">
+    <div class="font-weight-bold product-brand">{{product.brand}}</div>
+    <small class="text-secondary product-name">{{product.name}}</small>
+    <div class="d-flex align-items-center justify-content-between">
+      <div>
+        <small class="pr-1 text-secondary">Size:</small>
+        <span class="product-size">{{product.size}}</span>
+      </div>
+      <div class="d-flex align-items-center">
+        <small class="pr-1 text-secondary">MRP:</small>
+        <i class="fas fa-rupee-sign fa-sm pr-1"></i>
+        <span class="font-weight-bold product-mrp">{{product.mrp}}</span>
+      </div>
+
+    </div>
+  </div>
+  <div class="cart-section d-flex justify-content-center pt-2" (click)="toggleValue($event,product.id)">
+    <span class="btn btn-primary" (click)="updateQuantity(1)" *ngIf="!isInCart()">Add to Cart</span>
+    <div *ngIf="isInCart()" class="d-flex justify-content-center pt-1">
+      <span class="cursor-pointer pt-1 mr-2 border px-2 btn"
+        (click)="updateQuantity(-1)" (click)="toggleValue($event,product.id)">-</span>
+      <span class="product-quantity px-4 py-1 border rounded">{{
+        getQuantity(product.id) }}</span>
+      <span class="cursor-pointer pt-1 ml-2 border px-2 btn"
+        (click)="updateQuantity(1)">+</span>
+    </div>
+  </div>
+</div>

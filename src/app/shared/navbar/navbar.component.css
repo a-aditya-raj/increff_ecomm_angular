@@ -1,0 +1,10 @@
+nav {
+  z-index: 100;
+  background-color: white;
+  width: 100%
+}
+
+.navbar-brand img {
+  height: 32px;
+}
+

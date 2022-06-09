@@ -1,0 +1,87 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12 mt-2">
+      <h2 class="pl-md-3">Products</h2>
+    </div>
+    <div class="col-sm-12">
+      <div class="row d-flex justify-content-end">
+        <div class="col-sm-12 col-md-3 col-lg-2 mt-2" *ngIf="checkedBrands?.size">
+          <h6 class="alert-info" id="appfilt">Applied Filters:</h6>
+        </div>
+        <div class="col-sm-12 col-md-9 col-lg-7 mt-2 row">
+          <div class="col-auto overflow-auto rounded ml-1" *ngFor="let item of checkedBrands">
+            <button class="btn btn-sm filter-button border bg-info text-white px-2">
+              <span>
+                {{item}}
+              </span>
+            </button>
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-3 mt-2">
+          <div class="row d-flex justify-content-end">
+            <div class="col-sm-12 col-md-auto d-flex justify-content-end">
+              <h6 class="pt-1">Showing <span>{{productList?.length}}</span> Products</h6>
+            </div>
+            <div class="col-sm-12 col-md-auto d-flex justify-content-end pr-4">
+              <button class="btn btn-outline-secondary mr-2 d-md-none p-0" type="button" data-toggle="collapse"
+                data-target="#filtersection" id="filter-section">
+                <span class="material-icons align-middle pt-1" data-toggle="tooltip" title="Filters">
+                  filter_alt
+                </span>
+              </button>
+              <select class="form-control btn btn-sm border-secondary" style="font-size:small" type="string"
+                [(ngModel)]="currentSortMethod" (ngModelChange)="sort()">
+                <option *ngFor="let methods of SortMethods" [ngValue]="methods">{{methods}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="collapse col-sm-12 col-md-3 col-lg-2 fadeshow d-lg-flex justify-content-center py-2 pr-2 "
+      style="z-index:auto" *ngIf="filterpopup" id="filtersection">
+      <div class="row w-100 justify-content-center">
+        <div class="col-lg-12 col-md-6 col-sm-8 col-10 p-2 shadow-sm" style="z-index:6">
+          <div class="d-flex justify-content-between pb-2">
+            <h4 class="font-weight-bold">Filters</h4>
+            <button class="btn btn-sm btn-outline-danger p-0" type="button" data-toggle="tooltip" data-placement="right"
+              title="Remove All Filters" (click)="resetFilters(f)">
+              <span class="m-1 p-1 icon-sm material-icons">
+                filter_alt_off
+              </span>
+            </button>
+          </div>
+          <form>
+            <div class="border-top border-bottom">
+              <label class="filter-head h5 dropdown-toggle" data-toggle="collapse" data-target="#all-brands"
+                type="button" aria-expanded="false" aria-controls="all-brands">
+                Brands
+              </label>
+              <div class="collapse mt-2" id="all-brands">
+                <form #f="ngForm">
+                  <div *ngFor="let item of allBrands">
+                    <input type="checkbox" [id]="item" [name]="item"
+                      (change)="changeCheckBrand(item,$any($event.target).checked)" [value]="item" ngModel>
+                    <label [innerHTML]="item" [for]="item" class="mx-1"></label>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-12 col-md-9 col-lg-10">
+      <div class="row d-flex justify-content-start mx-auto" id="list-container" *ngIf="productList?.length">
+        <ng-container *ngFor="let product of productList">
+          <product-demo class="d-flex flex-column my-2 product-container col-14 col-md-5 col-lg-4 col-xl-3"
+            [product]="product">
+          </product-demo>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>

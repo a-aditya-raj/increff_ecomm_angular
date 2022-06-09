@@ -1,0 +1,114 @@
+<div class="container" *ngIf="isProductsFetched">
+  <div class="row">
+    <div class="col-12 d-flex justify-content-between pt-3">
+      <h2><strong>Cart</strong></h2>
+      <button class="btn border-danger" (click)="askConfirmClear()" *ngIf="productList.length">
+        <i class="material-icons cursor-pointer text-danger" data-tooltip="tooltip" data-placement="bottom"
+          title="Clear Cart" data-toggle="modal" >remove_shopping_cart</i>
+      </button>
+    </div>
+    <div class="col-12">
+      <hr />
+    </div>
+    <div class="col-12 col-lg-7 pt-4">
+      <div class="rounded shadow-sm" *ngIf="productList.length">
+        <div *ngFor="let product of productList; let index = index">
+          <div class="row m-0 p-2 border-bottom product bg-white" *ngIf="product.id > 0 && getQuantity(product.id) > 0">
+            <img class="img-fluid img-thumbnail p-0 border-white checkout-image" [src]="product.imageUrl" width="100px"
+              alt="Image not Available" />
+            <div class="col py-2 d-flex justify-content-between mr-auto flex-wrap position-relative">
+              <div>
+                <h5 class="font-weight-bold product-brand">
+                  {{product.brand}}
+                </h5>
+                <div class="text-secondary product-name">{{product.name}}</div>
+                <div>
+                  <span class="text-secondary">Size:</span>&nbsp;
+                  <span class="font-weight-bold product-size">{{product.size}}</span>
+                </div>
+              </div>
+              <div class="justify-items-end">
+                <div class="d-flex align-items-center justify-content-sm-end font-weight-bold mb-2">
+                  <i class="fas fa-rupee-sign fa-xs pr-1"></i>
+                  <span class="product-mrp">{{product.mrp}}</span>
+                </div>
+                <div class="d-flex align-items-center justify-content-center">
+                  <span
+                    class="circle cursor-pointer d-flex align-items-center justify-content-center mr-2 border btn p-1"
+                    (click)="updateQuantity(-1, index)">-</span>
+                  <span class="product-quantity px-4 py-1 border rounded">{{ getQuantity(product.id) }}</span>
+                  <span
+                    class="circle cursor-pointer d-flex align-items-center justify-content-center ml-2 border btn p-1"
+                    (click)="updateQuantity(1, index)">+</span>
+                </div>
+              </div>
+              <i class="fas fa-trash-alt p-1 cursor-pointer" (click)="askConfirmRemove(product.id)"></i>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <h5 class="m-2" *ngIf="!productList?.length">
+        Add more products to place an order
+      </h5>
+    </div>
+
+    <div class="col-12 col-lg-5 pt-3" *ngIf="productList?.length">
+      <h5 class="font-weight-bold m-2">Order Summary</h5>
+      <div class="border shadow-sm rounded p-2">
+        <h6 class="font-weight-bold mt-2">Total Items (<span>{{getQuantity1()}}</span>)</h6>
+
+        <hr />
+        <div class="d-flex align-items-center justify-content-between font-weight-bold">
+          <span>Total</span>
+          <span>
+            {{paymentInfo?.total}}
+          </span>
+        </div>
+      </div>
+      <div class="d-flex justify-content-end">
+        <button type="button" class="btn btn-primary mt-3" (click)="downloadOrder()">Place Order</button>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #confirmRemove let-modal id="modal">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Confirmation</h4>
+  </div>
+  <div class="modal-body">
+    <p>{{removeThis.name}} will be removed from cart?
+    </p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="modal.close('cancel')">Cancel</button>
+    <button type="button" data-dismiss="modal" class="btn btn-danger" (click)="modal.close('confirm')">Confirm</button>
+  </div>
+</ng-template>
+<ng-template #confirmClear let-modal id="modal">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Confirm Clear Cart</h4>
+  </div>
+  <div class="modal-body">
+    <p>All items will be removed from cart, proceed ?
+    </p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="modal.close('cancel')">Cancel</button>
+    <button type="button" data-dismiss="modal" class="btn btn-danger" (click)="modal.close('confirm')">Confirm</button>
+  </div>
+</ng-template>
+<ng-template #checkOutSuccess let-modal id="modal">
+  <div class="modal-body">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+
+    <div class="justify-content-center d-flex">
+      <img src="assets/resources/images/tick-mark.png" style="width:75%;aspect-ratio:1">
+    </div>
+    <h5 class="h5 d-flex justify-content-center">Order has been placed</h5>
+    <h6 class="h6 d-flex justify-content-center"><a routerLink="/products" (click)="modal.dismiss('Cross click')">Click
+        here to add new products</a></h6>
+  </div>
+</ng-template>

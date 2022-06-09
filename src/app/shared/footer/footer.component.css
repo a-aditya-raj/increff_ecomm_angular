@@ -1,0 +1,12 @@
+.footer {
+  display: flex;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 60px;
+}
+
+.footer .container-fluid {
+  display: flex;
+  align-items: center;
+}

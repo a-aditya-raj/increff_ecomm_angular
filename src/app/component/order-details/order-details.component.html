@@ -1,0 +1,81 @@
+<div class="container">
+
+  <h3 class="h3 w-50 mt-3">Upload Order</h3>
+  <div class="row my-3 mx-0">
+    <div class="col-12 col-md-10 col-lg-8">
+      <div class="row my-1 align-items-baseline">
+        <div class="col-8 col-md-5">
+          <input class="custom-file-input" type="file" accept="text/csv" (change)="uploadFiles($event.target)" required>
+          <label class="custom-file-label" for="order-file" *ngIf="!file">Choose file</label>
+          <label class="custom-file-label" for="order-file" *ngIf="file">{{file["name"]}}</label>
+        </div>
+        <div class="col-4 col-md-3 align-self-end">
+          <button class="btn btn-outline-primary py-2" (click)="uploadData()" [disabled]="!file">Upload</button>
+          <button class="btn btn-outline-dark py-2 ml-1" (click)="reload()">Reset</button>
+        </div>
+        <div class="col-12 col-md-4 my-1 my-md-0 p-0 align-self-end">
+          <a class="" href="/increff_angular_ecomm/src/assets/Sample.csv">Download Sample</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span *ngIf="errorFlag">There are some Errors. Check Downloaded File for errors </span>
+  
+  <div class="row m-0" *ngIf="(!errorFlag) && (dataPresent)">
+    <div class="col-lg-8 pr-lg-2 p-0 tableFixHead">
+      <table class="table align-items-center">
+        <thead>
+          <tr class="bg-light">
+            <th class="col-3" scope="col" >&nbsp;</th>
+            <th class="px-3 h4 col-3" scope="col">
+              Name
+            </th>
+            <th class="px-3 h4 col-3" scope="col" >
+              Price
+            </th>
+            <th class="px-3 h4 col-3" scope="col" >
+              Quantity
+            </th>
+          </tr>
+        </thead>
+        <tbody style="overflow: scroll;">
+          <tr class="item" *ngFor="let item of displayData">
+            <td class="px-3">
+              <img class="order-image" alt="Card image" [src]="item['img']" style="width:50%">
+            </td>
+            <td class="align-middle px-3 h5">
+              {{item['name']}}
+            </td>
+            <td class="align-middle px-3 h6">
+              Rs {{item['price']}}
+            </td>
+            <td class="align-middle px-3 h5 font-weight-bold">
+              {{item['quantity']}}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class=" sticky col-lg-4 shadow my-2 my-md-0 custom-stick-top mb-3" id="order-summary">
+      <div class="w-100 my-2">
+        <div class="header">
+          <h4 class="h4">Order Summary</h4>
+        </div>
+        <div class="my-3">
+          <h5 class="h5 row mx-0 my-1">
+            <span class="col-8 p-0">Total Quantity </span>
+            <span class="col-4 p-0">: {{total.quantity}}
+            </span>
+          </h5>
+          <h5 class="h5 row m-0">
+            <span class="col-8 p-0">
+              Total Amount
+            </span>
+            <span class="col-4 p-0">: Rs {{total.price}}
+            </span>
+          </h5>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

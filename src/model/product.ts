@@ -1,0 +1,17 @@
+export interface Product {
+  id: number,
+  brand: string,
+  name: string,
+  category: string,
+  clientSkuId: string,
+  color: string,
+  mrp: number,
+  size: string,
+  styleId: string,
+  imageUrl: string,
+  images: string[],
+  description: string,
+  material: string,
+  care: string,
+  quantity: number,
+}
